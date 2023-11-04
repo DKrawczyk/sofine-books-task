@@ -1,8 +1,8 @@
-import type { AppProps } from "next/app";
-import { MantineProvider } from "@mantine/core";
 import Head from "next/head";
-import { Notifications } from "@mantine/notifications";
+import type { AppProps } from "next/app";
 import "@mantine/core/styles.css";
+import { MantineProvider } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 import { theme } from "@/styles/theme";
 
 const App = ({ Component, pageProps }: AppProps) => {

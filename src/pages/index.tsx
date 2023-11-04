@@ -1,6 +1,5 @@
 import { Box, Title } from "@mantine/core";
 import { NextPage } from "next";
-// import { Title } from "mantine";
 
 const Main: NextPage = () => {
   return (
