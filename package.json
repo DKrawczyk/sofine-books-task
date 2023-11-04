@@ -6,19 +6,32 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "prettier:check": "prettier --check './src'",
+    "prettier:fix": "prettier --write './src'",
+    "lint": "prettier --check ./src && next lint ./src --ext .tsx --max-warnings=0",
+    "lint:fix": "prettier --write ./src && next lint ./src --ext .tsx --fix",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@mantine/core": "^7.1.7",
+    "@mantine/hooks": "^7.1.7",
+    "@mantine/notifications": "^7.1.7",
+    "axios": "^1.6.0",
+    "next": "14.0.1",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.0.1"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "@typescript-eslint/parser": "^6.9.1",
     "eslint": "^8",
-    "eslint-config-next": "14.0.1"
+    "eslint-config-next": "14.0.1",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-unused-imports": "^3.0.0",
+    "typescript": "^5"
   }
 }

@@ -1,3 +1,45 @@
 {
-  "extends": "next/core-web-vitals"
+  "plugins": ["@typescript-eslint", "prettier", "unused-imports", "import"],
+  "extends": [
+    "eslint:recommended",
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "quotes": ["error", "double"],
+    "prettier/prettier": "warn",
+    "unused-imports/no-unused-imports": "warn",
+    "unused-imports/no-unused-vars": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "react/self-closing-comp": "warn",
+    "no-duplicate-imports": "warn",
+    "import/newline-after-import": [
+      "error",
+      {
+        "count": 1
+      }
+    ],
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ]
+      }
+    ],
+    "lines-between-class-members": [
+      "warn",
+      "always",
+      {
+        "exceptAfterSingleLine": true
+      }
+    ]
+  }
 }
