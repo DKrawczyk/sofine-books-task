@@ -1,22 +1,42 @@
 import { Flex, Pagination } from "@mantine/core";
 import { NextPage } from "next";
-import { HandleBar } from "@/components/organisms/HandleBar";
-import { BookPreview } from "@/components/organisms/BookPreview";
-import { PageWrapper } from "@/components/templates/PageWrapper";
-import { PageHeader } from "@/components/molecules/PageHeaders";
-// import { PageWrapper } from "@/components";
-// import { PageHeader } from "@/components/molecules/PageHeader";
+import { useEffect, useState } from "react";
+import { PageHeader, HandleBar, PageWrapper, BooksList } from "@/components";
+import { BooksDTO, IGetBooks, getBooksList } from "./api/books";
 
 const Main: NextPage = () => {
+  const [bookList, setBookList] = useState<BooksDTO[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const data: IGetBooks = await getBooksList();
+        if (data) {
+          setBookList(data.items);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, []);
+
+  const itemsPerPage = 8;
+  const paginationRange = Math.ceil(bookList.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentPageData = bookList.slice(startIndex, endIndex);
+
   return (
     <PageWrapper>
       <PageHeader />
       <Flex direction={"column"} align={"center"}>
         <HandleBar />
-        <BookPreview />
+        <BooksList books={currentPageData} />
         <Pagination
           mb={30}
-          total={10}
+          onChange={setCurrentPage}
+          total={paginationRange}
           size="xs"
           radius="md"
           withControls={false}
