@@ -1,16 +1,10 @@
-import { Box, Container } from "@mantine/core";
+import { Box } from "@mantine/core";
 import { FC, PropsWithChildren } from "react";
 
-interface PageWrapperProps {}
-
-export const PageWrapper: FC<PropsWithChildren<PageWrapperProps>> = ({
-  children,
-}) => {
+export const PageWrapper: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <Box style={{ backgroundColor: "#393E46" }} mih={"100vh"}>
-      <Container m={"0 auto"} size={1920} p={0}>
-        {children}
-      </Container>
+    <Box pos={"relative"} mih={"100vh"}>
+      {children}
     </Box>
   );
 };

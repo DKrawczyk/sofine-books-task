@@ -1,25 +1,19 @@
 import { Flex, Pagination } from "@mantine/core";
 import { NextPage } from "next";
-import { useEffect, useState } from "react";
-import { PageHeader, HandleBar, PageWrapper, BooksList } from "@/components";
-import { BooksDTO, IGetBooks, getBooksList } from "./api/books";
+import { useState } from "react";
+
+import {
+  BooksList,
+  HandleBar,
+  PageFooter,
+  PageHeader,
+  PageWrapper,
+} from "@/components";
+import { BooksDTO } from "./api/books";
 
 const Main: NextPage = () => {
   const [bookList, setBookList] = useState<BooksDTO[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const data: IGetBooks = await getBooksList();
-        if (data) {
-          setBookList(data.items);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, []);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const itemsPerPage = 8;
   const paginationRange = Math.ceil(bookList.length / itemsPerPage);
@@ -30,8 +24,13 @@ const Main: NextPage = () => {
   return (
     <PageWrapper>
       <PageHeader />
-      <Flex direction={"column"} align={"center"}>
-        <HandleBar />
+      <Flex
+        mih={"calc(100vh - 160px)"}
+        style={{ backgroundColor: "#393E46" }}
+        direction={"column"}
+        align={"center"}
+      >
+        <HandleBar bookList={bookList} testFnc={setBookList} />
         <BooksList books={currentPageData} />
         <Pagination
           mb={30}
@@ -44,6 +43,7 @@ const Main: NextPage = () => {
           color="#00ADB5"
         />
       </Flex>
+      <PageFooter />
     </PageWrapper>
   );
 };

@@ -12,6 +12,8 @@ export const BooksList: FC<IBooksList> = ({ books }) => {
     <Flex maw={1700} wrap={"wrap"} justify={"center"} mt={30} mih={620}>
       {books.length > 0 ? (
         books.map((item, idx) => {
+          console.log(item.volumeInfo.imageLinks);
+
           return (
             <Flex
               mx={20}
@@ -22,17 +24,18 @@ export const BooksList: FC<IBooksList> = ({ books }) => {
               key={idx}
               h={280}
             >
-              <Flex my={10} miw={140} maw={140} pos={"relative"} >
+              <Flex my={10} miw={140} maw={140} pos={"relative"}>
                 <Image
-                  loader={() =>
-                    item.volumeInfo.imageLinks?.smallThumbnail as string
+                  loader={
+                    item.volumeInfo.imageLinks &&
+                    (() => item.volumeInfo.imageLinks?.thumbnail as string)
                   }
                   alt="Book thumbnail"
                   fill
-                  // width={180}
-                  // height={230}
                   src={
-                    "http://books.google.com/books/content?id=4QUrngEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api"
+                    item.volumeInfo.imageLinks
+                      ? (item.volumeInfo.imageLinks?.thumbnail as string)
+                      : "/icons/noImage.svg"
                   }
                 />
               </Flex>

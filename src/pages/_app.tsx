@@ -13,7 +13,15 @@ const App = ({ Component, pageProps }: AppProps) => {
         <title>Books app</title>
       </Head>
       <MantineProvider withCssVariables theme={theme}>
-        <Notifications position="top-right" />
+        <Notifications
+          w={300}
+          style={{
+            position: "absolute",
+            top: "30px",
+            right: "40px",
+            display: "inline",
+          }}
+        />
         <Component {...pageProps} />
       </MantineProvider>
     </>
