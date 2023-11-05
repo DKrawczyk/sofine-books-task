@@ -1,5 +1,18 @@
-import { MantineThemeOverride } from "@mantine/core";
+import { Input, MantineThemeOverride } from "@mantine/core";
 
 export const theme: MantineThemeOverride = {
-  /** Future theme for custom components */
+  components: {
+    Input: Input.extend({
+      styles: {
+        input: {
+          backgroundColor: "#EEE",
+          border: "none",
+          borderRadius: "20px",
+        },
+        section: {
+          marginRight: "10px",
+        },
+      },
+    }),
+  },
 };
