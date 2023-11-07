@@ -11,8 +11,8 @@ import {
   PageHeader,
   PageWrapper,
   SortTypes,
+  ContentWrapper,
 } from "@/components";
-import { ContentWrapper } from "@/components/templates/ContentWrapper";
 import { usePagination } from "@/hooks/usePagination";
 import { BooksDTO, getBooksList } from "./api/books";
 
