@@ -9,7 +9,12 @@ export const PageHeader: FC<PageHeaderProps> = () => {
   return (
     <CustomWrapper>
       <Box w={130} pos={"relative"} h={50}>
-        <Image src="/icons/logo.gif" alt="Company logo" fill />
+        <Image
+          src="/icons/logo.gif"
+          alt="Company logo"
+          fill
+          sizes="max-width:130px"
+        />
       </Box>
     </CustomWrapper>
   );

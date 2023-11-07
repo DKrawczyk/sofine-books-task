@@ -35,6 +35,6 @@ export const getBooksList = async (query?: string) => {
     );
     return response.data;
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 };

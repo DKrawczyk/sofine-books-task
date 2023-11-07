@@ -12,7 +12,7 @@ interface SingleBookProps {
 
 export const SingleBook: FC<SingleBookProps> = ({ book }) => {
   const { volumeInfo } = book;
-  console.log(volumeInfo.authors);
+
   return (
     <Flex
       mx={20}

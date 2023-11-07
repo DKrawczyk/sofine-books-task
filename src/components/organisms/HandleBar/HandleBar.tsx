@@ -1,7 +1,7 @@
 import { ActionIcon, Flex, Input, Loader, Text } from "@mantine/core";
 import {
-  Icon360,
   IconSearch,
+  IconSortAZ,
   IconSortAscendingLetters,
   IconSortDescendingLetters,
 } from "@tabler/icons-react";
@@ -41,11 +41,18 @@ export const HandleBar: FC<HandleBarProps> = ({
   const iconsComponent = {
     [SortTypes.ASC]: <IconSortDescendingLetters size={24} />,
     [SortTypes.DSC]: <IconSortAscendingLetters size={24} />,
-    [SortTypes.NO_SORT]: <Icon360 size={24} />,
+    [SortTypes.NO_SORT]: <IconSortAZ size={24} />,
   };
 
   return (
-    <Flex w="100%" justify={"center"} px={20} maw={1700} mt={30}>
+    <Flex
+      w="100%"
+      justify={"center"}
+      px={20}
+      maw={1700}
+      mt={30}
+      pos={"relative"}
+    >
       <Input
         w={"50%"}
         onChange={(e) => setSearchValue(e.currentTarget.value)}
@@ -66,7 +73,12 @@ export const HandleBar: FC<HandleBarProps> = ({
         }
       />
 
-      <Flex align={"center"} display={bookList.length > 0 ? "flex" : "none"}>
+      <Flex
+        align={"center"}
+        display={bookList.length > 0 ? "flex" : "none"}
+        pos={"absolute"}
+        right={20}
+      >
         <Text mr={8}>Sort:</Text>
         <ActionIcon variant="transparent" color="#00ADB5" onClick={sortHandler}>
           {iconsComponent[sortType]}
