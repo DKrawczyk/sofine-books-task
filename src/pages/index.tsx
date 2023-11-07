@@ -1,6 +1,8 @@
-import { Flex, Pagination } from "@mantine/core";
 import { NextPage } from "next";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+
+import { showNotification } from "@mantine/notifications";
+import { Pagination } from "@mantine/core";
 
 import {
   BooksList,
@@ -8,33 +10,81 @@ import {
   PageFooter,
   PageHeader,
   PageWrapper,
+  SortTypes,
 } from "@/components";
-import { BooksDTO } from "./api/books";
+import { ContentWrapper } from "@/components/templates/ContentWrapper";
+import { usePagination } from "@/hooks/usePagination";
+import { BooksDTO, getBooksList } from "./api/books";
 
 const Main: NextPage = () => {
   const [bookList, setBookList] = useState<BooksDTO[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [sortType, setSortType] = useState<SortTypes>(SortTypes.NO_SORT);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const itemsPerPage = 8;
-  const paginationRange = Math.ceil(bookList.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentPageData = bookList.slice(startIndex, endIndex);
+  const getData = async (searchValue: string) => {
+    if (searchValue.trim() === "") {
+      showNotification({
+        color: "orange",
+        title: "Warning",
+        message: "Please, insert title of the book",
+      });
+    } else {
+      setIsLoading(true);
+      const result = await getBooksList(searchValue);
+      if (result?.items) {
+        setBookList(result.items);
+        setIsLoading(false);
+      } else {
+        setBookList([]);
+      }
+    }
+  };
+
+  const sortBooks = (list: BooksDTO[], sortType: SortTypes) => {
+    switch (sortType) {
+      case SortTypes.ASC: {
+        return [...list].sort((a, b) =>
+          a.volumeInfo.title.localeCompare(b.volumeInfo.title),
+        );
+      }
+      case SortTypes.DSC: {
+        return [...list].sort((a, b) =>
+          b.volumeInfo.title.localeCompare(a.volumeInfo.title),
+        );
+      }
+      default: {
+        return list;
+      }
+    }
+  };
+
+  const sortedData = useMemo<BooksDTO[]>(() => {
+    const data = sortBooks(bookList, sortType);
+    return data;
+  }, [bookList, sortType]);
+
+  const { startIndex, endIndex, paginationRange, setPage } = usePagination({
+    pageSize: 8,
+    collectionSize: sortedData.length,
+  });
+
+  const displayData = sortedData.slice(startIndex, endIndex);
 
   return (
     <PageWrapper>
       <PageHeader />
-      <Flex
-        mih={"calc(100vh - 160px)"}
-        style={{ backgroundColor: "#393E46" }}
-        direction={"column"}
-        align={"center"}
-      >
-        <HandleBar bookList={bookList} testFnc={setBookList} />
-        <BooksList books={currentPageData} />
+      <ContentWrapper>
+        <HandleBar
+          bookList={bookList}
+          getData={getData}
+          setSortType={setSortType}
+          sortType={sortType}
+          isLoading={isLoading}
+        />
+        <BooksList books={displayData} />
         <Pagination
           mb={30}
-          onChange={setCurrentPage}
+          onChange={setPage}
           total={paginationRange}
           size="xs"
           radius="md"
@@ -42,7 +92,7 @@ const Main: NextPage = () => {
           withEdges
           color="#00ADB5"
         />
-      </Flex>
+      </ContentWrapper>
       <PageFooter />
     </PageWrapper>
   );

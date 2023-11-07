@@ -5,7 +5,7 @@ interface ImageDTO {
   thumbnail: string;
 }
 
-interface VolumeDTO {
+export interface VolumeDTO {
   title: string;
   authors: string[];
   description?: string;
@@ -20,20 +20,19 @@ export interface IGetBooks {
   items: BooksDTO[];
 }
 
-export const getBooksList = async (test?: string) => {
+export const getBooksList = async (query?: string) => {
   try {
     const response = await axios.get<IGetBooks>(
       "https://www.googleapis.com/books/v1/volumes?",
       {
         params: {
-          q: test,
+          q: query,
           fields:
             "items(volumeInfo(title,description,authors,imageLinks(thumbnail,smallThumbnail)))",
-          maxResults: 38,
+          maxResults: 40,
         },
       },
     );
-    console.log(response);
     return response.data;
   } catch (err) {
     console.log(err);
