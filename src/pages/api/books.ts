@@ -1,6 +1,6 @@
 import axios from "axios";
 
-interface ImageDTO {
+export interface ImageDTO {
   smallThumbnail: string;
   thumbnail: string;
 }

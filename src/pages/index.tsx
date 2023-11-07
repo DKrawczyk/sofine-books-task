@@ -35,6 +35,12 @@ const Main: NextPage = () => {
         setBookList(result.items);
         setIsLoading(false);
       } else {
+        setIsLoading(false);
+        showNotification({
+          color: "red",
+          title: "Error",
+          message: "API request error",
+        });
         setBookList([]);
       }
     }
