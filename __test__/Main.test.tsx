@@ -4,7 +4,7 @@ import { BooksDTO } from "@/pages/api/books";
 import { render, screen } from "../test-utils";
 
 describe("BooksList component", () => {
-  it("No results found when books array is empty", () => {
+  it("Visible text 'No results found' when books array is empty", () => {
     const emptyBooksArray: [] = [];
     render(<BooksList books={emptyBooksArray} />);
 
@@ -12,7 +12,7 @@ describe("BooksList component", () => {
     expect(noResultsTitle).toBeInTheDocument();
   });
 
-  it("No results found when books array is not empty", () => {
+  it("Hide component with text 'No results found' when books array is not empty", () => {
     const nonEmptyBooksArray: BooksDTO[] = [
       {
         volumeInfo: {
